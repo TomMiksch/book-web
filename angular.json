@@ -6,7 +6,7 @@
     "book-web": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
+        "@ngneat/spectator:spectator-component": {
           "style": "scss"
         }
       },
@@ -103,5 +103,9 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "521d3254-f7f2-4028-8910-205ff3f28283",
+    "defaultCollection": "@ngneat/spectator"
   }
 }
