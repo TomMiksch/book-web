@@ -3,4 +3,6 @@ export class Book {
   title: string | undefined;
   author: string | undefined;
   publisher: string | undefined;
+  stillHave: boolean | undefined;
+  location: string | undefined;
 }

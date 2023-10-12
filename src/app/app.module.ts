@@ -7,11 +7,15 @@ import {BookComponent} from './book/book.component';
 import {MatTableModule} from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import {CdkColumnDef} from '@angular/cdk/table';
+import { HomeComponent } from './home/home.component';
+import { ModifyComponent } from './modify/modify.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BookComponent
+    BookComponent,
+    HomeComponent,
+    ModifyComponent
   ],
   imports: [
     BrowserModule,
