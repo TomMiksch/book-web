@@ -11,6 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { ModifyComponent } from './modify/modify.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {DigitOnlyModule} from '@uiowa/digit-only';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import {MatInputModule} from '@angular/material/input';
     MatTableModule,
     HttpClientModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    BrowserAnimationsModule,
+    DigitOnlyModule,
+    FormsModule
   ],
   providers: [
     CdkColumnDef

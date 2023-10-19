@@ -1,8 +1,30 @@
 <h2> {{header}} </h2>
+<ng-container *ngIf="!editMode">
+  <mat-form-field class="form-field">
+    <mat-label>Search by ISBN</mat-label>
+    <input matInput maxlength="13" type="text" digitOnly [(ngModel)]="isbn"/>
+  </mat-form-field>
+  <button (click)="findBook()">Search</button>
+</ng-container>
 
-<mat-form-field class="whatever">
-  <mat-label class="isbn-box-label">Search by ISBN</mat-label>
-  <input matInput class="isbn-box"/>
-  <br>
-  <button class="isbn-box-button">Search</button>
-</mat-form-field>
+<ng-container>
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="title"/>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Author</mat-label>
+      <input matInput [(ngModel)]="author"/>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Publisher</mat-label>
+      <input matInput [(ngModel)]="publisher"/>
+    </mat-form-field>
+  </div>
+  <button (click)="saveBook()">Save</button>
+</ng-container>
