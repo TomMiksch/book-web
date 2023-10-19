@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {EditOrAddService} from '../edit-or-add.service';
 
 @Component({
   selector: 'app-modify',
@@ -9,17 +9,16 @@ import {Router} from '@angular/router';
 export class ModifyComponent implements OnInit {
 
   header: string = 'Loading...'
-  editMode: boolean = false;
+  bookId: number = -1;
 
-  constructor(private router: Router) { }
+  constructor(private editOrAddService: EditOrAddService) {
+  }
 
   ngOnInit(): void {
-    // this.editMode = this.router
-    // TODO create a shared service I guess f***
-    console.log('=============>', this.router);
-    console.log('=============>', this.editMode);
-    if (this.editMode != undefined) {
-      this.header = this.editMode ? 'Edit Book' : 'Add Book';
+    let editMode = this.editOrAddService.getEditMode();
+    this.header = editMode ? 'Edit Book' : 'Add Book';
+    if (editMode) {
+      this.bookId = this.editOrAddService.getBookId();
     }
   }
 }

@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {CdkColumnDef} from '@angular/cdk/table';
 import { HomeComponent } from './home/home.component';
 import { ModifyComponent } from './modify/modify.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ModifyComponent } from './modify/modify.component';
     BrowserModule,
     AppRoutingModule,
     MatTableModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [
     CdkColumnDef

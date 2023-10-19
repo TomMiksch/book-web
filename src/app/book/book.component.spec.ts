@@ -8,6 +8,7 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import Spy = jasmine.Spy;
 import {MatTableModule} from '@angular/material/table';
 import {Router} from '@angular/router';
+import {EditOrAddService} from '../edit-or-add.service';
 
 let expectedBook = {
   id: 1,
@@ -26,15 +27,23 @@ const mockRouter = {
   navigate: () => {},
 };
 
+const mockEditOrAddService = {
+  setEditMode: (thing: boolean) => null,
+  setBookId: (thing: number) => null
+}
+
 describe('BookComponent', () => {
   let spectator: Spectator<BookComponent>;
   let getAllSpy: Spy;
   let routerNavigateSpy: Spy;
+  let editSpyMode: Spy;
+  let editSpyBook: Spy;
   const createComponent = createComponentFactory({
     component: BookComponent,
     providers: [
       mockProvider(BookService, mockBookService),
-      mockProvider(Router, mockRouter)
+      mockProvider(Router, mockRouter),
+      mockProvider(EditOrAddService, mockEditOrAddService)
     ],
     imports: [MatTableModule],
     schemas: [NO_ERRORS_SCHEMA]
@@ -43,6 +52,8 @@ describe('BookComponent', () => {
   beforeEach(() => {
     getAllSpy = spyOn(mockBookService, 'getAll').and.callThrough();
     routerNavigateSpy = spyOn(mockRouter, 'navigate').and.callThrough();
+    editSpyMode = spyOn(mockEditOrAddService, 'setEditMode').and.callThrough();
+    editSpyBook = spyOn(mockEditOrAddService, 'setBookId').and.callThrough();
     spectator = createComponent();
   });
 
@@ -84,12 +95,9 @@ describe('BookComponent', () => {
 
     it('should take the user to the edit page when clicking that button', () => {
       spectator.click(('button'));
-      expect(routerNavigateSpy).toHaveBeenCalledWith([`/editBook`], {
-        state: {
-          editMode: true,
-          bookId: 1
-        },
-      });
+      expect(routerNavigateSpy).toHaveBeenCalledWith([`/editBook`]);
+      expect(editSpyMode).toHaveBeenCalledWith(true);
+      expect(editSpyBook).toHaveBeenCalledWith(1);
     });
   });
 });

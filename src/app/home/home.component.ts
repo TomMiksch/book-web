@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {EditOrAddService} from '../edit-or-add.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,8 @@ import {Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private editOrAddService: EditOrAddService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,10 +20,7 @@ export class HomeComponent implements OnInit {
   }
 
   addBook() {
-    this.router.navigate(['/addBook'], {
-      state: {
-        editMode: false
-      }
-    }).then(res => console.log(res));
+    this.editOrAddService.setEditMode(false);
+    this.router.navigate(['/addBook']).then(res => console.log(res));
   }
 }

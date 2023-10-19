@@ -4,22 +4,32 @@ import { HomeComponent } from './home.component';
 import {Router} from '@angular/router';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import Spy = jasmine.Spy;
+import {EditOrAddService} from '../edit-or-add.service';
 
 const mockRouter = {
   navigate: () => Promise.resolve('Lol buttfart'),
 };
 
+const mockEditOrAddService = {
+  setEditMode: (thing: boolean) => null
+}
+
 describe('HomeComponent', () => {
   let spectator: Spectator<HomeComponent>;
   let routerSpy: Spy;
+  let addSpy: Spy;
   const createComponent = createComponentFactory({
     component: HomeComponent,
-    providers: [mockProvider(Router, mockRouter)],
+    providers: [
+      mockProvider(Router, mockRouter),
+      mockProvider(EditOrAddService, mockEditOrAddService)
+    ],
     schemas: [NO_ERRORS_SCHEMA]
   });
 
   beforeEach(() => {
     routerSpy = spyOn(mockRouter, 'navigate').and.callThrough();
+    addSpy = spyOn(mockEditOrAddService, 'setEditMode').and.callThrough();
     spectator = createComponent();
   });
 
@@ -40,10 +50,7 @@ describe('HomeComponent', () => {
 
   it('should take the user to the add page when clicking that button', () => {
     spectator.click('#add-button');
-    expect(routerSpy).toHaveBeenCalledWith(['/addBook'], {
-      state: {
-        editMode: false
-      },
-    });
+    expect(routerSpy).toHaveBeenCalledWith(['/addBook']);
+    expect(addSpy).toHaveBeenCalledWith(false);
   });
 });

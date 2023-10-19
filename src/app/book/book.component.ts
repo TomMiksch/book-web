@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BookService} from '../book.service';
 import {Book} from '../objects/Book';
 import {Router} from '@angular/router';
+import {EditOrAddService} from '../edit-or-add.service';
 
 @Component({
   selector: 'app-book',
@@ -22,6 +23,7 @@ export class BookComponent implements OnInit {
   ]
 
   constructor(private bookService: BookService,
+              private editOrAddService: EditOrAddService,
               private router: Router) {
   }
 
@@ -38,11 +40,8 @@ export class BookComponent implements OnInit {
   }
 
   toEditPage(id: number) {
-    this.router.navigate(['/editBook'], {
-      state: {
-        editMode: true,
-        bookId: id
-      }
-    }).then(r => console.log(r));
+    this.editOrAddService.setEditMode(true);
+    this.editOrAddService.setBookId(id);
+    this.router.navigate(['/editBook']).then(r => console.log(r));
   }
 }

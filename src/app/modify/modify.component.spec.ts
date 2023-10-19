@@ -3,45 +3,35 @@ import {createComponentFactory, mockProvider, Spectator} from '@ngneat/spectator
 import {ModifyComponent} from './modify.component';
 import {Navigation, NavigationExtras, Router} from '@angular/router';
 import Spy = jasmine.Spy;
+import {EditOrAddService} from '../edit-or-add.service';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
-const addNav = {
-  extras: {
-    state: {
-      editMode: false
-    }
-  } as NavigationExtras
-} as Navigation;
-
-const editNav = {
-  extras: {
-    state: {
-      editMode: true,
-      bookId: 1
-    }
-  } as NavigationExtras
-} as Navigation;
-
-const mockRouterAdd = {
-  getCurrentNavigation: () => addNav
+const mockEditOrAddServiceAdd = {
+  getEditMode: () => false,
+  getBookId: () => -1
 };
 
-const mockRouterEdit = {
-  getCurrentNavigation: () => editNav
+const mockEditOrAddServiceEdit = {
+  getEditMode: () => true,
+  getBookId: () => 1
 };
 
 describe('ModifyComponent', () => {
   let spectator: Spectator<ModifyComponent>;
 
   describe('Add Mode', () => {
-    let addSpy: Spy;
+    let addSpyMode: Spy;
+    let addSpyBook: Spy;
 
     const createComponent = createComponentFactory({
       component: ModifyComponent,
-      providers: [mockProvider(Router, mockRouterAdd)]
+      providers: [mockProvider(EditOrAddService, mockEditOrAddServiceAdd)],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {
-      addSpy = spyOn(mockRouterAdd, 'getCurrentNavigation').and.callThrough();
+      addSpyMode = spyOn(mockEditOrAddServiceAdd, 'getEditMode').and.callThrough();
+      addSpyBook = spyOn(mockEditOrAddServiceAdd, 'getBookId').and.callThrough();
       spectator = createComponent();
     });
 
@@ -49,21 +39,33 @@ describe('ModifyComponent', () => {
       expect(spectator.component).toBeTruthy();
     });
 
-    it('should have a header that says Loading', () => {
-      expect(spectator.query('h2')?.textContent).toContain('Add Book')
+    it('should have a header that says Add Book', () => {
+      expect(spectator.query('h2')?.textContent).toContain('Add Book');
+      expect(addSpyMode).toHaveBeenCalled();
+      expect(addSpyBook).not.toHaveBeenCalled();
+      expect(spectator.component.bookId).toEqual(-1);
+    });
+
+    it('should have add by ISBN', () => {
+      expect(spectator.query('.isbn-box-label')).toContainText('Search by ISBN');
+      expect(spectator.query('.isbn-box')).toExist();
+      expect(spectator.query('.isbn-box-button')).toContainText('Search');
     });
   });
 
   describe('Edit Mode', () => {
-    let editSpy: Spy;
+    let editSpyMode: Spy;
+    let editSpyBook: Spy;
 
     const createComponent = createComponentFactory({
       component: ModifyComponent,
-      providers: [mockProvider(Router, mockRouterEdit)]
+      providers: [mockProvider(EditOrAddService, mockEditOrAddServiceEdit)],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     beforeEach(() => {
-      editSpy = spyOn(mockRouterEdit, 'getCurrentNavigation').and.callThrough();
+      editSpyMode = spyOn(mockEditOrAddServiceEdit, 'getEditMode').and.callThrough();
+      editSpyBook = spyOn(mockEditOrAddServiceEdit, 'getBookId').and.callThrough();
       spectator = createComponent();
     });
 
@@ -71,8 +73,11 @@ describe('ModifyComponent', () => {
       expect(spectator.component).toBeTruthy();
     });
 
-    it('should have a header that says Loading', () => {
-      expect(spectator.query('h2')?.textContent).toContain('Edit Book')
+    it('should have a header that says Edit Book', () => {
+      expect(spectator.query('h2')?.textContent).toContain('Edit Book');
+      expect(editSpyMode).toHaveBeenCalled();
+      expect(editSpyBook).toHaveBeenCalled();
+      expect(spectator.component.bookId).toEqual(1);
     });
   });
 });
