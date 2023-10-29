@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-wifi": "ng serve --host 192.168.1.35 --ssl",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --browsers ChromeHeadless"
@@ -20,9 +21,12 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@ericblade/quagga2": "^1.2.6",
     "@uiowa/digit-only": "^3.2.1",
+    "ngx-barcode-scanner": "^0.2.0",
     "rxjs": "~7.5.0",
-    "tslib": "^2.3.0",
+    "string-width": "^2.1.1",
+    "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -31,6 +35,7 @@
     "@angular/compiler-cli": "^14.2.0",
     "@ngneat/spectator": "^12.2.1",
     "@types/jasmine": "~4.0.0",
+    "@types/node": "^20.8.9",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

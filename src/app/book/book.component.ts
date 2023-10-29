@@ -11,6 +11,7 @@ import {EditOrAddService} from '../edit-or-add.service';
 })
 export class BookComponent implements OnInit {
   books: Book[] = [];
+  message: string = ''
 
   displayedColumns: string[] = [
     'id',
@@ -34,6 +35,7 @@ export class BookComponent implements OnInit {
         this.books = val;
       },
       error: err => {
+        this.message = err;
         console.error(err);
       }
     });

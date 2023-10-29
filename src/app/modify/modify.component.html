@@ -1,9 +1,9 @@
 <h2> {{header}} </h2>
+
 <ng-container *ngIf="!editMode">
-  <mat-form-field class="form-field">
-    <mat-label>Search by ISBN</mat-label>
-    <input matInput maxlength="13" type="text" digitOnly [(ngModel)]="isbn"/>
-  </mat-form-field>
+  <div [hidden]="!barcodeValue">
+    {{ message }} + {{barcodeValue}}
+  </div>
   <button (click)="findBook()">Search</button>
 </ng-container>
 
@@ -26,5 +26,16 @@
       <input matInput [(ngModel)]="publisher"/>
     </mat-form-field>
   </div>
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Location</mat-label>
+      <input matInput [(ngModel)]="location"/>
+    </mat-form-field>
+  </div>
   <button (click)="saveBook()">Save</button>
 </ng-container>
+<barcode-scanner-livestream
+    type="ean"
+    (valueChanges)="onValueChanges($event)"
+    (started)="(onStarted)"
+></barcode-scanner-livestream>

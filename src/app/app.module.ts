@@ -14,6 +14,7 @@ import {MatInputModule} from '@angular/material/input';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DigitOnlyModule} from '@uiowa/digit-only';
 import {FormsModule} from '@angular/forms';
+import { BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {FormsModule} from '@angular/forms';
     MatInputModule,
     BrowserAnimationsModule,
     DigitOnlyModule,
-    FormsModule
+    FormsModule,
+    BarcodeScannerLivestreamModule
   ],
   providers: [
     CdkColumnDef
